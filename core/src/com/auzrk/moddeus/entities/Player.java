@@ -38,6 +38,8 @@ public class Player extends Mob{
     Texture texture;
     TextureRegion[][] frameSet;
     
+    Boolean canJump;
+    
     public Player(Vector2 pos, GameScreen gameState) {
         super(pos, 1, 2, 1, gameState);
         
@@ -51,8 +53,10 @@ public class Player extends Mob{
         stand.setPlayMode(Animation.PlayMode.LOOP);
         walk.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         
-        acc = 5;
+        acc = 50;
         maxSpeed = 5;
+        
+        canJump = true;
     }
 
     @Override
@@ -75,7 +79,14 @@ public class Player extends Mob{
         Vector2 vel = body.getLinearVelocity();
         
         if(Gdx.input.isKeyPressed(Keys.D)){
-            vel.x = 10;
+            body.applyForceToCenter(new Vector2(acc,0), true);
+        }
+        if(Gdx.input.isKeyPressed(Keys.A)){
+            body.applyForceToCenter(new Vector2(-acc,0), true);
+        }
+        if((Gdx.input.isKeyPressed(Keys.W)||Gdx.input.isKeyJustPressed(Keys.SPACE)) && canJump){
+            vel.y = 10;
+            canJump = false;
         }
         
         body.setLinearVelocity(vel);

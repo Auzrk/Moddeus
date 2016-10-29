@@ -137,7 +137,9 @@ public class GameScreen extends AbstractScreen{
             worldTime -= delta;             // I haven't read into what they do properly or why those vals are default
         }
         
-        renderer.setView(cam);              
+        renderer.setView(cam); 
+        cam.position.x = player.pos.x;
+        cam.position.y = player.pos.y;
         cam.update();                       //Update cam pos
         
         //UPDATING ENTITIES
