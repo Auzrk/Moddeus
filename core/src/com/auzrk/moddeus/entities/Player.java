@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 
 /**
  *
- * @author Aaznec
+ * @author Aurzrk
  */
 public class Player extends Mob{
     
@@ -86,7 +86,7 @@ public class Player extends Mob{
     }
 
     @Override
-    public void onCollider(PhysEntity collider) {
+    public void onCollide(PhysEntity collider) {
     }
     
 }

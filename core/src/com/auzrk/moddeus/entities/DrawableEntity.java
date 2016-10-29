@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 
 /**
  *
- * @author Aaznec
+ * @author Aurzrk
  */
 public abstract class DrawableEntity extends Entity{
     

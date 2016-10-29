@@ -7,7 +7,7 @@ import com.auzrk.moddeus.screens.GameScreen;
 
 /**
  *
- * @author Aaznec
+ * @author Aurzrk
  */
 
 public abstract class Entity {

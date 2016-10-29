@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 /**
  *
- * @author Aaznec
+ * @author Aurzrk
  */
 public abstract class Mob extends DrawableEntity implements PhysEntity{
     

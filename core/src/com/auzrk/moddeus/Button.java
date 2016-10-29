@@ -7,12 +7,12 @@ import com.badlogic.gdx.graphics.Texture;
 
 /**
  *
- * @author Aaznec
+ * @author Aurzrk
  */
 public class Button {
     
     public float x, y, centerX, centerY, width, height; //Everywhere else spells it 'center' so its easier to just use the american spelling
-    
+    public String text;
     public Button(float centerX, float centerY, float width, float height){
         this.centerX = centerX;
         this.centerY = centerY;

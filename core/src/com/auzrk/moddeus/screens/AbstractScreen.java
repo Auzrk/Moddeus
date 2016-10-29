@@ -8,7 +8,7 @@ import com.badlogic.gdx.Screen;
 
 /**
  *
- * @author Aaznec
+ * @author Aurzrk
  */
 public abstract class AbstractScreen implements Screen{
     

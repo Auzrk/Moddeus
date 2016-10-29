@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 /**
  *
- * @author Aaznec
+ * @author Aurzrk
  */
 
 //I realise that implementing Tile as an entity is kinda hacky but its much easier this way
@@ -49,6 +49,6 @@ public class Tile extends Entity implements PhysEntity{
     }
 
     @Override
-    public void onCollider(PhysEntity collider) {
+    public void onCollide(PhysEntity collider) {
     }
 }

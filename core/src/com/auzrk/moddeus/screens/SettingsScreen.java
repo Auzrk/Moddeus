@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 /**
  *
- * @author Aaznec
+ * @author Aurzrk
  */
 public class SettingsScreen extends AbstractScreen{
 

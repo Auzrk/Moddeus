@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Aaznec
+ * @author Aurzrk
  */
 public class GameScreen extends AbstractScreen{
     

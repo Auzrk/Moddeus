@@ -5,7 +5,7 @@ package com.auzrk.moddeus.entities;
 
 /**
  *
- * @author Aaznec
+ * @author Aurzrk
  */
 public class NPC {
     
