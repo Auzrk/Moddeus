@@ -10,6 +10,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 /**
  *
@@ -43,7 +46,7 @@ public class Player extends Mob{
         
         state = state.standing;
         
-        stand = new Animation(0.4f, frameSet[0][0], frameSet[0][0], frameSet[0][0], frameSet[0][0], frameSet[0][0], frameSet[0][0], frameSet[0][4]);
+        stand = new Animation(0.4f, frameSet[0][0], frameSet[0][0], frameSet[0][0], frameSet[0][0], frameSet[0][0], frameSet[0][0],  frameSet[0][0], frameSet[0][0], frameSet[0][0], frameSet[0][0], frameSet[0][0], frameSet[0][0], frameSet[0][0], frameSet[0][4]);
         walk = new Animation(0.15f, frameSet[0][0], frameSet[0][1] ,frameSet[0][2]);
         stand.setPlayMode(Animation.PlayMode.LOOP);
         walk.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
@@ -72,7 +75,7 @@ public class Player extends Mob{
         Vector2 vel = body.getLinearVelocity();
         
         if(Gdx.input.isKeyPressed(Keys.D)){
-            vel.x = 5;
+            vel.x = 10;
         }
         
         body.setLinearVelocity(vel);

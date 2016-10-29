@@ -150,7 +150,8 @@ public class GameScreen extends AbstractScreen{
         
         renderer.renderTileLayer(background); //Render background
         renderer.renderTileLayer(ground); //Render ground
-        renderer.renderTileLayer(spawns); //TESTING
+        
+        renderer.renderTileLayer(spawns); //TESTING PURPOSES
         
         for(DrawableEntity e : drawList){ //Draw every active drawable entity
             batch.draw(e.getFrame(), e.pos.x, e.pos.y, 0, 0, e.width, e.height, 1, 1, e.rot);
