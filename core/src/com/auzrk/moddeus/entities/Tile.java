@@ -8,6 +8,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 /**
@@ -49,6 +51,6 @@ public class Tile extends Entity implements PhysEntity{
     }
 
     @Override
-    public void onCollide(PhysEntity collider) {
+    public void onCollide(Fixture self, Fixture other) {
     }
 }

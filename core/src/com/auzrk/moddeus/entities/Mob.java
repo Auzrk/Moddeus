@@ -28,24 +28,15 @@ public abstract class Mob extends DrawableEntity implements PhysEntity{
     }
     
     public void createBody(){
-        //This is kinda long as just creating a simple rectangle doesn't work (http://www.iforce2d.net/b2dtut/ghost-vertices)
-        //this only works for 1x2 characters, ill made specific code for other ents or just make a better function
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.fixedRotation = true;
         bodyDef.position.set(pos.x, pos.y);
         PolygonShape boxShape = new PolygonShape();
-        boxShape.setAsBox((float)width/2 -0.1f, 0.75f * 0.5f * height -0.1f, new Vector2(width/2, height/2+0.125f*height),0); //for some reason this function takes halfwidth and halfheight? the vector2 bit sets the origin of the box to the bottom left
+        boxShape.setAsBox((float)width/2,0.5f * height, new Vector2(width/2, height/2),0); //for some reason this function takes halfwidth and halfheight? the vector2 bit sets the origin of the box to the bottom left
         body = gameState.world.createBody(bodyDef);
         body.createFixture(boxShape, 0f);
-        CircleShape circShape = new CircleShape();
-        circShape.setRadius(width/2 - 0.075f);
-        circShape.setPosition(new Vector2(width/2, height/4));
-        body.createFixture(circShape, 0f);
-        body.getFixtureList().get(0).setFriction(0f);
-        body.getFixtureList().get(1).setFriction(0f);
         boxShape.dispose();
-        circShape.dispose();
         body.setUserData(this);
     }
     

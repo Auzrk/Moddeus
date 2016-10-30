@@ -3,6 +3,7 @@
  */
 package com.auzrk.moddeus.screens;
 
+import com.auzrk.moddeus.CollisionHandler;
 import com.auzrk.moddeus.Moddeus;
 import com.auzrk.moddeus.entities.DrawableEntity;
 import com.auzrk.moddeus.entities.Entity;
@@ -57,6 +58,8 @@ public class GameScreen extends AbstractScreen{
     //DEBUG
     Box2DDebugRenderer debug;
     boolean debugOn;
+    float framerateCounter;
+    float framerate;
     
     public GameScreen(Moddeus game, String levelname) {
         super(game);
@@ -65,6 +68,7 @@ public class GameScreen extends AbstractScreen{
         world = new World(new Vector2(0, -325), true); //Init physics with gravity down
         worldTime = 0;
         worldStep = 1/300f; //Step forward physics sim at increments of 1/300 of a second
+        world.setContactListener(new CollisionHandler());
         
         
         preEntList = new ArrayList<Entity>(); //Init ent lists
@@ -121,10 +125,17 @@ public class GameScreen extends AbstractScreen{
 
     @Override
     public void show() {
+        game.font.getData().setScale(renderer.getUnitScale());
     }
 
     @Override
     public void render(float delta) {
+        
+        framerateCounter += delta;
+        if(framerateCounter > 0.5){
+            framerate = 1/delta;
+            framerateCounter = 0;
+        }
         
         delta *= timeScale; //Scale time (if we want slow motion or to pause)
         
@@ -164,6 +175,10 @@ public class GameScreen extends AbstractScreen{
         renderer.renderTileLayer(foreground); //render overlay
         
         //DRAW UI
+        
+        if(debugOn){
+            game.font.draw(batch, String.valueOf(framerate), 10, 10);
+        }
         
         batch.end();
         //FINISH DRAWING
@@ -215,7 +230,7 @@ public class GameScreen extends AbstractScreen{
     @Override
     public void dispose() {
         super.dispose();
-        Gdx.input.setInputProcessor(null);
+        game.font.getData().setScale(1);
     }
     
    //END SCREEN FUNCTIONS
