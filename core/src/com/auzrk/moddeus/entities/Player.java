@@ -53,22 +53,36 @@ public class Player extends Mob{
         stand.setPlayMode(Animation.PlayMode.LOOP);
         walk.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         
-        acc = 50;
-        maxSpeed = 5;
+        acc = 500;
+        maxSpeed = 15;
         
         canJump = true;
     }
 
     @Override
     public TextureRegion getFrame() {
+        TextureRegion frame;
         switch(state){
             case standing:
-                return stand.getKeyFrame(stateTime);
+                frame = stand.getKeyFrame(stateTime);
             case walking:
-                return walk.getKeyFrame(stateTime);
+                frame = walk.getKeyFrame(stateTime);
             //case attacking
+            case jumping:
+                frame = frameSet[0][5];
             default:
-                return frameSet[0][0];
+                frame = frameSet[0][0];
+        }
+        if(dir == 1){
+            if(frame.isFlipX()){
+                frame.flip(true, false);
+            }
+            return frame;
+        }else{
+            if(!frame.isFlipX()){
+                frame.flip(true, false);
+            }
+            return frame;
         }
     }
 
@@ -77,16 +91,25 @@ public class Player extends Mob{
         super.update(delta);
         
         Vector2 vel = body.getLinearVelocity();
-        
+        vel.x = 0;
+        state = state.standing;
         if(Gdx.input.isKeyPressed(Keys.D)){
-            body.applyForceToCenter(new Vector2(acc,0), true);
+            vel.x = maxSpeed;
+            dir = 1;
+            state = state.walking;
         }
         if(Gdx.input.isKeyPressed(Keys.A)){
-            body.applyForceToCenter(new Vector2(-acc,0), true);
+            vel.x = -maxSpeed;
+            dir = -1;
+            state=state.walking;
         }
-        if((Gdx.input.isKeyPressed(Keys.W)||Gdx.input.isKeyJustPressed(Keys.SPACE)) && canJump){
-            vel.y = 10;
+        if((Gdx.input.isKeyJustPressed(Keys.W)||Gdx.input.isKeyJustPressed(Keys.SPACE)) && true){ //true while i fix canjump
+            vel.y = maxSpeed *2.5f ;
             canJump = false;
+        }
+        
+        if(Math.signum(vel.y) > 0.05){
+            state = state.jumping;
         }
         
         body.setLinearVelocity(vel);

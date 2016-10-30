@@ -62,7 +62,7 @@ public class GameScreen extends AbstractScreen{
         super(game);
         this.levelname = levelname;
         
-        world = new World(new Vector2(0, -10), true); //Init physics with gravity of 10N down
+        world = new World(new Vector2(0, -325), true); //Init physics with gravity down
         worldTime = 0;
         worldStep = 1/300f; //Step forward physics sim at increments of 1/300 of a second
         
@@ -137,15 +137,16 @@ public class GameScreen extends AbstractScreen{
             worldTime -= delta;             // I haven't read into what they do properly or why those vals are default
         }
         
-        renderer.setView(cam); 
-        cam.position.x = player.pos.x;
-        cam.position.y = player.pos.y;
-        cam.update();                       //Update cam pos
-        
         //UPDATING ENTITIES
         for(Entity e : entList){            //Cycle through all active ents and update
             e.update(delta);
         }
+        
+        
+        renderer.setView(cam); 
+        cam.position.x = player.pos.x;
+        cam.position.y = player.pos.y;
+        cam.update();                       //Update cam pos
         
         //BEGIN DRAWING
         batch.begin();
