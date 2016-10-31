@@ -12,7 +12,7 @@ import com.badlogic.gdx.Screen;
  */
 public abstract class AbstractScreen implements Screen{
     
-    Moddeus game;   //Whatever screen I am in, I need a reference to the game object.
+    public Moddeus game;   //Whatever screen I am in, I need a reference to the game object.
     public AbstractScreen(Moddeus game){ 
         this.game = game;
     }

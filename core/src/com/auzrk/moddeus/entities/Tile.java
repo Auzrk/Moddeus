@@ -22,13 +22,19 @@ public class Tile extends Entity implements PhysEntity{
     
     float x, y;
     Body body;
+    String type;
     
-    public Tile(float x, float y, Cell cell, GameScreen gameState){
+    public Tile(float x, float y, Cell cell, GameScreen gameState, String type){
         super(gameState);
         this.x = x;
         this.y = y;
         createBody();
+        this.type = type;
         //to be created, just made this so I didn't get errors while writing GameScreen
+        
+        if(type.equalsIgnoreCase("water")){
+            body.getFixtureList().get(0).setSensor(true);
+        }
     }
 
     @Override
@@ -52,5 +58,12 @@ public class Tile extends Entity implements PhysEntity{
 
     @Override
     public void onCollide(Fixture self, Fixture other) {
+        
+        if(type.equalsIgnoreCase("water")){
+            Object o = other.getUserData();
+            if(o instanceof Mob){
+                ((Mob) o).slow(0.5f);
+            }
+        }
     }
 }

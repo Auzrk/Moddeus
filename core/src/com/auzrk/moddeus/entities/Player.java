@@ -56,7 +56,7 @@ public class Player extends Mob{
         walk.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         
         acc = 500;
-        maxSpeed = 15;
+        maxSpeed = 25;
         
         canJump = true;
     }
@@ -119,6 +119,9 @@ public class Player extends Mob{
         
         body.setLinearVelocity(vel);
         
+        if(pos.y < 0){
+            die();
+        }
         //clampVel();
     }
 
@@ -153,7 +156,17 @@ public class Player extends Mob{
             if( ((String) self.getUserData()).equalsIgnoreCase("feet")){
                 canJump = true; 
             }
+            
+            if(!other.isSensor()){ //It feet come into contact with something hard at high speed, splat
+                if(Math.abs(body.getLinearVelocity().y) > 50){
+                    die();
+                }
+            }
         }
+    }
+    
+    public void die(){
+        gameState.game.setScreen(new GameScreen(gameState.game, gameState.levelname));
     }
     
 }

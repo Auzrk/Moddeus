@@ -21,9 +21,12 @@ public abstract class Mob extends DrawableEntity implements PhysEntity{
     public float maxSpeed;
     int health;
     
+    float slowTimer;
+    
     public Mob(Vector2 pos, float width, float height, float dir, GameScreen gameState) {
         super(pos, width, height, dir, gameState);
         health = 100;
+        maxSpeed = 25;
         createBody();
     }
     
@@ -43,14 +46,33 @@ public abstract class Mob extends DrawableEntity implements PhysEntity{
     public void update(float delta){
         super.update(delta);
         pos = body.getPosition();
+        slowTimer += delta;
+        if(slowTimer < 0){
+            maxSpeed = 5;
+        }else{
+            maxSpeed = 25;
+        }
     }
     
-    public void clampVel(){
+    public void slow(float time){
+        slowTimer = 0 - time;
+    }
+    
+    public void clampVelX(){
         Vector2 vel = body.getLinearVelocity();
         if(vel.x > maxSpeed){
             body.setLinearVelocity(maxSpeed, vel.y);
         } else if(vel.x < -maxSpeed){
             body.setLinearVelocity(-maxSpeed, vel.y);
+        }
+    }
+    
+    public void clampVelY(){
+        Vector2 vel = body.getLinearVelocity();
+        if(vel.y > maxSpeed){
+            body.setLinearVelocity(vel.x, maxSpeed);
+        } else if(vel.y < -maxSpeed){
+            body.setLinearVelocity(vel.x, -maxSpeed);
         }
     }
     

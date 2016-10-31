@@ -42,7 +42,7 @@ public class GameScreen extends AbstractScreen{
     public ArrayList<Entity> deadEntList; //Entities to be removed from entList
     public ArrayList<DrawableEntity> drawList; //Entities to be drawn
     
-    String levelname; //Level to be loaded
+    public String levelname; //Level to be loaded
     TiledMap map; //Stores the loaded level
     TiledMapTileLayer background, ground, foreground, spawns; //Seperate layers
     OrthogonalTiledMapRenderer renderer; //Renderer for tile map and entities
@@ -87,7 +87,7 @@ public class GameScreen extends AbstractScreen{
             for(int y = 0; y <= ground.getHeight(); y++){       
                 Cell cell = ground.getCell(x, y);
                 if(cell != null){
-                    addEnt(new Tile(x, y, cell, this));       //Tiles will be added to entList in the next frame
+                   addEnt(new Tile(x, y, cell, this, ((String) cell.getTile().getProperties().get("type"))));      //Tiles will be added to entList in the next frame
                 }
             }
         }
@@ -109,7 +109,7 @@ public class GameScreen extends AbstractScreen{
         batch = renderer.getBatch(); //Init drawing batch
         
         cam = new OrthographicCamera();
-        cam.setToOrtho(false, 16, 9);
+        cam.setToOrtho(false, 24, 13.5f);
         
         for(Entity e : preEntList){ //Find the player on this level
             if(e instanceof Player){
@@ -139,7 +139,7 @@ public class GameScreen extends AbstractScreen{
         
         delta *= timeScale; //Scale time (if we want slow motion or to pause)
         
-        Gdx.gl.glClearColor(0.15f, 0.15f, 0.2f, 1); //Clear the screen
+        Gdx.gl.glClearColor(0.8f, 0.8f, 1f, 1); //Clear the screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); //
         
         worldTime += delta;
@@ -177,7 +177,9 @@ public class GameScreen extends AbstractScreen{
         //DRAW UI
         
         if(debugOn){
-            game.font.draw(batch, String.valueOf(framerate), 10, 10);
+            game.font.draw(batch, String.valueOf(framerate), cam.position.x -5, cam.position.y -5);
+            Vector2 vel = player.body.getLinearVelocity();
+            game.font.draw(batch, "Vel : " + String.valueOf(vel.x) + "," + String.valueOf(vel.y), cam.position.x, cam.position.y);
         }
         
         batch.end();
@@ -245,7 +247,7 @@ public class GameScreen extends AbstractScreen{
     
     public void spawnEnt(String s, float x, float y){
         //Im forced to use a massive condition chain here as this java version doesnt support strings in switches... seriously java!?
-        if(s.equalsIgnoreCase("player")){ //For some reason == wasn't working here... i dont know why
+        if(s.equalsIgnoreCase("player")){
             addEnt(new Player(new Vector2(x,y), this));
         }else{
             System.out.println( "'" + s + "'" + " doesn't exist as an entity!");
