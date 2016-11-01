@@ -119,10 +119,14 @@ public class Player extends Mob{
         
         body.setLinearVelocity(vel);
         
-        if(pos.y < 0){
+        if(health <= 0 || pos.y < 0){
             die();
         }
-        //clampVel();
+        
+        //test
+        if(Gdx.input.isKeyJustPressed(Keys.R)){
+            die();
+        }
     }
 
     @Override
@@ -137,11 +141,11 @@ public class Player extends Mob{
         body.createFixture(boxShape, 0f);
         CircleShape circShape = new CircleShape();
         circShape.setRadius(width/2 - 0.075f);
-        circShape.setPosition(new Vector2(width/2, height/4));
+        circShape.setPosition(new Vector2(width/2, height/4-0.05f));
         body.createFixture(circShape, 0f);
         body.getFixtureList().get(0).setFriction(0f);
         body.getFixtureList().get(1).setFriction(0f);
-        boxShape.setAsBox(0.125f, 0.025f, new Vector2(width/2 -0.03125f, 0.05f), 0);
+        boxShape.setAsBox(0.35f, 0.1f, new Vector2(0.5f, 0.05f), 0);
         body.createFixture(boxShape, 0f);
         body.getFixtureList().get(2).setSensor(true);
         body.getFixtureList().get(2).setUserData("feet");
@@ -158,8 +162,8 @@ public class Player extends Mob{
             }
             
             if(!other.isSensor()){ //It feet come into contact with something hard at high speed, splat
-                if(Math.abs(body.getLinearVelocity().y) > 50){
-                    die();
+                if(Math.abs(body.getLinearVelocity().y) > 75){
+                    health-=25;
                 }
             }
         }

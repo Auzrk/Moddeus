@@ -19,7 +19,7 @@ public abstract class Mob extends DrawableEntity implements PhysEntity{
     public Body body;
     public float acc;
     public float maxSpeed;
-    int health;
+    public int health;
     
     float slowTimer;
     
@@ -48,7 +48,8 @@ public abstract class Mob extends DrawableEntity implements PhysEntity{
         pos = body.getPosition();
         slowTimer += delta;
         if(slowTimer < 0){
-            maxSpeed = 5;
+            maxSpeed = 15;
+            clampVelY();
         }else{
             maxSpeed = 25;
         }

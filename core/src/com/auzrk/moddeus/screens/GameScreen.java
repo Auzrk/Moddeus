@@ -125,7 +125,6 @@ public class GameScreen extends AbstractScreen{
 
     @Override
     public void show() {
-        game.font.getData().setScale(renderer.getUnitScale());
     }
 
     @Override
@@ -142,15 +141,15 @@ public class GameScreen extends AbstractScreen{
         Gdx.gl.glClearColor(0.8f, 0.8f, 1f, 1); //Clear the screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); //
         
+        //UPDATING ENTITIES
+        for(Entity e : entList){            //Cycle through all active ents and update
+            e.update(delta);
+        }
+        
         worldTime += delta;
         while(worldTime > worldStep){       //Step physics how ever many times it needs to be
             world.step(worldStep, 6, 2);    //6 and 2 are recommended by documentation as position and velocity iterations 
             worldTime -= delta;             // I haven't read into what they do properly or why those vals are default
-        }
-        
-        //UPDATING ENTITIES
-        for(Entity e : entList){            //Cycle through all active ents and update
-            e.update(delta);
         }
         
         
@@ -174,17 +173,21 @@ public class GameScreen extends AbstractScreen{
         
         renderer.renderTileLayer(foreground); //render overlay
         
-        //DRAW UI
-        
-        if(debugOn){
-            game.font.draw(batch, String.valueOf(framerate), cam.position.x -5, cam.position.y -5);
-            Vector2 vel = player.body.getLinearVelocity();
-            game.font.draw(batch, "Vel : " + String.valueOf(vel.x) + "," + String.valueOf(vel.y), cam.position.x, cam.position.y);
-        }
         
         batch.end();
         //FINISH DRAWING
         
+        //DRAW UI
+        game.batch.begin();
+        
+        game.font.draw(game.batch, "Health: " + String.valueOf(player.health), 0, Gdx.graphics.getHeight()-50);
+        
+        if(debugOn){
+            game.font.draw(game.batch, "FPS: " + String.valueOf(framerate), 200, 200);
+            Vector2 vel = player.body.getLinearVelocity();
+            game.font.draw(game.batch, "Vel : " + String.valueOf(vel.x) + "," + String.valueOf(vel.y), 200, 300);
+        }
+        game.batch.end();
         
         // ADDING/REMOVING ENTITIES
         for(Entity e : preEntList){
@@ -232,7 +235,6 @@ public class GameScreen extends AbstractScreen{
     @Override
     public void dispose() {
         super.dispose();
-        game.font.getData().setScale(1);
     }
     
    //END SCREEN FUNCTIONS

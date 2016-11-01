@@ -1,4 +1,4 @@
-package com.auzrk.moddeus.desktop;
+ package com.auzrk.moddeus.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;

@@ -60,9 +60,10 @@ public class Tile extends Entity implements PhysEntity{
     public void onCollide(Fixture self, Fixture other) {
         
         if(type.equalsIgnoreCase("water")){
-            Object o = other.getUserData();
+            Object o = other.getBody().getUserData();
             if(o instanceof Mob){
                 ((Mob) o).slow(0.5f);
+                System.out.println("slowed!");
             }
         }
     }
